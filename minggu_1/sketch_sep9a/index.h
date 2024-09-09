@@ -16,7 +16,7 @@ public:
   }
 
   static void blink(void) {
-    instance()._blink();
+    instance()._blink3();
   }
 
   static void pwm(void) {
@@ -46,12 +46,7 @@ private:
       Serial.println(F(" ON"));
 
       for (int j = 0; j < LED_COUNT; j++) {
-        if (i == j) {
-          digitalWrite(LED_PINS[j], HIGH);
-        }
-        else {
-          digitalWrite(LED_PINS[j], LOW);
-        }
+        digitalWrite(LED_PINS[j], (i == j) ? HIGH : LOW);
       }
 
       delay(500);
@@ -59,6 +54,59 @@ private:
       Serial.print(F("LED "));
       Serial.print(i + 1);
       Serial.println(F(" OFF"));
+    }
+  }
+
+  void _blink2() {
+    for (int i = 0; i < 2; i++) {
+      digitalWrite(LED_PINS[i], HIGH);
+      delay(1000);
+    }
+
+    for (int i = 0; i < 2; i++) {
+      digitalWrite(LED_PINS[i], LOW);
+      delay(1000);
+    }
+
+    for (int i = 0; i < 2; i++) {
+      digitalWrite(LED_PINS[i], HIGH);
+    }
+
+    delay(1000);
+    
+    for (int i = 0; i < 2; i++) {
+      digitalWrite(LED_PINS[i], LOW);
+    }
+
+    delay(1000);
+  }
+
+  void _blink3() {
+    for (int i = 0; i < 3; i++) {
+      this->_MessageLED(i + 1, 1);
+
+      for (int j = 0; j < 3; j++) {
+        digitalWrite(LED_PINS[j], (i == j) ? HIGH : LOW);
+      }
+      
+      if (i == 2) {
+        for (int k = 0; k < 3; k++) {
+          this->_MessageDelay(ARR_DELAY[k]);
+          delay(ARR_DELAY[k]);
+          if (k == 2) {
+            digitalWrite(LED_PINS[2], LOW);
+            digitalWrite(LED_PINS[1], HIGH);
+            delay(ARR_DELAY[k]);
+            digitalWrite(LED_PINS[1], LOW);
+          }
+        }
+      }
+      else {
+        this->_MessageDelay(ARR_DELAY[i]);
+        delay(ARR_DELAY[i]);
+      }
+
+      this->_MessageLED(i + 1, 0);
     }
   }
 
@@ -78,6 +126,18 @@ private:
     }
   }
 
+  void _MessageLED(int pin, int value) {
+    Serial.print(F("\nLED "));
+    Serial.print(pin);
+    Serial.println(value ? " ON" : " OFF");
+  }
+
+  void _MessageDelay(int _delay) {
+    Serial.print(F("DELAY : "));
+    Serial.print(_delay);
+    Serial.println(F("ms"));
+  }
+
   void _SerialMessage() {
     if (Serial.available() > 0) {
       String message = Serial.readString();
@@ -86,7 +146,8 @@ private:
   }
 
 private:
-  const int LED_PINS[3] = {2, 3, 13};
-  const int LED_COUNT = 3;
+  static const int LED_COUNT = 3;
+  const int LED_PINS[LED_COUNT] = {2, 3, 4}; // PIN 2, 3, 4
+  const int ARR_DELAY[3] = {6000, 1500, 700};
 };
 
