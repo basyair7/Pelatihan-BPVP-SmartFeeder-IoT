@@ -16,6 +16,8 @@ public:
   }
 
   static void blink(void) {
+    // instance()._blink();
+    // instance()._blink2();
     instance()._blink3();
   }
 
