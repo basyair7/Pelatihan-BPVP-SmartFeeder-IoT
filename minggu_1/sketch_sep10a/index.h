@@ -11,6 +11,7 @@ class MyProgram {
   void test1();
   void test2();
   void test3();
+  void test4();
   
   public static MyProgram& instance() {
     static MyProgram instance;
@@ -21,9 +22,10 @@ class MyProgram {
     instance()._setup();
     
     while(1) {  
-      instance().test1();
+      // instance().test1();
       // instance().test2();
       // instance().test3();
+      instance().test4();
     }
   }
 };

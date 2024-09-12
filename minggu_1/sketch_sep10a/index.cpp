@@ -12,8 +12,13 @@ void MyProgram::test1() {
   potensioValue   = analogRead(A0);
   LEDBrightness1  = potensioValue / 4;
   LEDBrightness2  = 255 - LEDBrightness1;
-  analogWrite(4, LEDBrightness1);
-  analogWrite(5, LEDBrightness2);
+  analogWrite(3, LEDBrightness1);
+  analogWrite(4, LEDBrightness2);
+
+  Serial.print(F("LEDBrightness1 : "));
+  Serial.println(LEDBrightness1);
+  Serial.print(F("LEDBrightness2 : "));
+  Serial.println(LEDBrightness2);
 
   delay(10);
 }
@@ -38,4 +43,9 @@ void MyProgram::test3() {
 
     delay(delayTime);
   }
+}
+
+void MyProgram::test4() {
+  potensioValue = analogRead(A0);
+  int state = map(potensioValue, 0, 1023, 0, 100);
 }
