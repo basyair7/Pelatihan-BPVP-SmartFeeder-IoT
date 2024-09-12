@@ -12,7 +12,7 @@ public:
   }
 
   static void main() {
-    instance().test2();
+    instance().test3();
   }
 
 private:
