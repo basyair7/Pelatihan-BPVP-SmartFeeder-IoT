@@ -4,8 +4,8 @@ void MyProgram::_setup() {
   Serial.begin(9600);
   pinMode(this->potensioPIN, INPUT);
 
-  for (int i = 0; i < this->LED_COUNT; i++) {
-    pinMode(this->LED_PINS[i], OUTPUT);
+  for (const auto i : this->LED_PINS) {
+    pinMode(i, OUTPUT);
   }
 }
 

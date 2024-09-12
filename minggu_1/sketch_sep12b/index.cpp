@@ -5,8 +5,8 @@ void MyProgram::_setup() {
   pinMode(this->TriggerPin, OUTPUT);
   pinMode(this->EchoPin, INPUT);
 
-  for (int i = 0; i < this->LED_COUNT; i++) {
-    pinMode(this->LED_PINS[i], OUTPUT);
+  for (const auto i : this->LED_PINS) {
+    pinMode(i, OUTPUT);
   }
 }
 
