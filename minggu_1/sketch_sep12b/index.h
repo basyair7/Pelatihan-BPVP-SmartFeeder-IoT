@@ -1,33 +1,36 @@
 #include "Arduino.h"
 
-#define ON  0x1
-#define OFF 0x0
-
 class MyProgram {
 public:
   static MyProgram& instance() {
     static MyProgram instance;
     return instance;
   }
-  
+
   static void setup() {
     instance()._setup();
   }
 
   static void main() {
-    for(;;) {
-      // instance().test1();
-      instance().test2();
-    }
+    instance().test2();
   }
 
 private:
-  const int potensioPIN = A7;
+  // for ultrasonic sensor
+  float time, distance;
+  const uint8_t TriggerPin = 9;
+  const uint8_t EchoPin    = 10;
+  unsigned long lastMillis = 0;
+
+  // for led
   static const int LED_COUNT = 3;
-  const int LED_PINS[LED_COUNT] = { 3, 4, 5 };
-  unsigned int potensioValue;
+  const int LED_PINS[LED_COUNT] = { 2, 3, 4 };
+
+private:
   void _setup();
+  float getDistance(uint32_t _delay);
   void test1();
   void test2();
+  void test3();
 
 };
