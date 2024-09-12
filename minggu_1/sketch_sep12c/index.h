@@ -1,6 +1,6 @@
 #include "Arduino.h"
-#include "Wire.h"
-#include "LiquidCrystal_I2C.h"
+#include "LCDdisplay.h"
+#include "LiquidCrystal_animated.h"
 
 class MyProgram {
 public:
@@ -18,7 +18,8 @@ public:
   }
 
 private:
-  LiquidCrystal_I2C* lcd = new LiquidCrystal_I2C(0x27, 20, 4);
+  LCDdisplay* lcd = new LCDdisplay(20, 4);
+  LiquidCrystal_animated ChrAnimated = LiquidCrystal_animated(20);
 
 private:
   void _setup();
