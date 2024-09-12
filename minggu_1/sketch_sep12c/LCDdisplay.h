@@ -31,8 +31,8 @@ public:
   }
 
   // printout LCD
-  template <typename T> // template function to print
-  void print(const T& x, const uint8_t col, const uint8_t row) {
+  template <typename T> void print(const T& x, const uint8_t col, const uint8_t row) 
+  {
     lcd.setCursor(col, row);
     lcd.print(x);
   }
