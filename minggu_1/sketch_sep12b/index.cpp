@@ -61,7 +61,7 @@ void MyProgram::test2() {
 }
 
 void MyProgram::test3() {
-  this->distance = getDistance(1000);
+  this->distance = getDistance(100);
 
   Serial.print(F("Distance : "));
   Serial.print(this->distance);
