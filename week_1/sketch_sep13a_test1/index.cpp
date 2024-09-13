@@ -17,7 +17,7 @@ void MyProgram::test1() {
     lcd->printWithCursor<String>(F("PERSEDIAAN ADA"), 0, 0);
   
     int indexLED = (distance < 20) ? 0 : (distance > 20 && distance < 100) ? 1 : 2;
-    for (int i = 0; i < this->LED_COUNT; i++) {
+    for (int i = 0; i < (int)(sizeof(this->LED_PINS) / sizeof(this->LED_PINS[0])); i++) {
       digitalWrite(this->LED_PINS[i], i == indexLED ? HIGH : LOW);
     }
   

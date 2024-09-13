@@ -18,8 +18,7 @@ public:
 
 private:
   // define LED pins
-  static const int LED_COUNT = 3;
-  const int LED_PINS[LED_COUNT] = { 3, 4, 5 };
+  const int LED_PINS[3] = { 3, 4, 5 };
   // define Ultrasonic Pins
   const byte TriggerPin = 9;
   const byte EchoPin    = 10;

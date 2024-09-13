@@ -23,8 +23,7 @@ public:
 
 private:
   const int potensioPIN = A7;
-  static const int LED_COUNT = 3;
-  const int LED_PINS[LED_COUNT] = { 3, 4, 5 };
+  const int LED_PINS[3] = { 3, 4, 5 };
   unsigned int potensioValue;
   void _setup();
   void test1();

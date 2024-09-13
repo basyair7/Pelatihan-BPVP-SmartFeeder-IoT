@@ -23,8 +23,7 @@ private:
   unsigned long lastMillis = 0;
 
   // for led
-  static const int LED_COUNT = 3;
-  const int LED_PINS[LED_COUNT] = { 2, 3, 4 };
+  const int LED_PINS[3] = { 2, 3, 4 };
 
 private:
   void _setup();

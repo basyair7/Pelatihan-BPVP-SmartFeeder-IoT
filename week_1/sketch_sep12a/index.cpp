@@ -54,7 +54,7 @@ void MyProgram::test2() {
   // }
 
   int ledIndex = (this->potensioValue < 300) ? 0 : (this->potensioValue > 300 && this->potensioValue < 600) ? 1 : 2;
-  for (int i = 0; i < this->LED_PINS; i++) {
+  for (int i = 0; i < (int)(sizeof(this->LED_PINS) / sizeof(this->LED_PINS[0])); i++) {
     digitalWrite(this->LED_PINS[i], i == ledIndex ? ON : OFF);
   }
 

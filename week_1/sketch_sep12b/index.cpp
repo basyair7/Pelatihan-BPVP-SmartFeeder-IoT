@@ -68,7 +68,7 @@ void MyProgram::test3() {
   Serial.println(F("cm"));
 
   int indexPins = (this->distance < 10.00) ? 0 : (this->distance > 10.00 && this->distance < 20.00) ? 1 : 2;
-  for (int i = 0; i < this->LED_COUNT; i++) {
+  for (int i = 0; i < (int)(sizeof(this->LED_PINS) / sizeof(this->LED_PINS[0])); i++) {
     digitalWrite(this->LED_PINS[i], (i == indexPins) ? HIGH : LOW);
   }
 
