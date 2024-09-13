@@ -32,8 +32,8 @@ public:
 private:
   void _begin() {
     Serial.begin(9600);
-    for (int i = 0; i < LED_COUNT; i++) {
-      pinMode(LED_PINS[i], OUTPUT);
+    for (const auto i : LED_PINS) {
+      pinMode(i, OUTPUT);
     }
   }
 
@@ -42,12 +42,12 @@ private:
   }
 
   void _blink() {
-    for (int i = 0; i < LED_COUNT; i++) {
+    for (int i = 0; i < (int)(sizeof(LED_PINS)/sizeof(LED_PINS[0])); i++) {
       Serial.print(F("LED "));
       Serial.print(i + 1);
       Serial.println(F(" ON"));
 
-      for (int j = 0; j < LED_COUNT; j++) {
+      for (int j = 0; j < (int)(sizeof(LED_PINS)/sizeof(LED_PINS[0])); j++) {
         digitalWrite(LED_PINS[j], (i == j) ? HIGH : LOW);
       }
 
@@ -84,7 +84,7 @@ private:
   }
 
   void _blink3() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < (int)(sizeof(LED_PINS) / sizeof(LED_PINS[0])); i++) {
       this->_MessageLED(i + 1, 1);
 
       for (int j = 0; j < 3; j++) {
@@ -148,8 +148,7 @@ private:
   }
 
 private:
-  static const int LED_COUNT = 3;
-  const int LED_PINS[LED_COUNT] = {2, 3, 4}; // PIN 2, 3, 4
+  const int LED_PINS[3] = {2, 3, 4}; // PIN 2, 3, 4
   const int ARR_DELAY[3] = {6000, 1500, 700};
 };
 
