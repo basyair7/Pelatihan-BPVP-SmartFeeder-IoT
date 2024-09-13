@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "LCDdisplay.h"
-#include "LiquidCrystal_animated.h"
+#include "DS3231rtc.h"
 
 class MyProgram {
 public:
@@ -18,10 +18,10 @@ public:
   }
 
 private:
-  LCDdisplay* lcd = new LCDdisplay(20, 4);
-  LiquidCrystal_animated ChrAnimated;
-
-private:
   void _setup();
   void test1();
+
+private:
+  LCDdisplay* lcd = new LCDdisplay(20, 4);
+  DS3231rtc* rtc = new DS3231rtc();
 };
