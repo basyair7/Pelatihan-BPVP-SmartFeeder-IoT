@@ -46,9 +46,9 @@ void MyProgram::test1(void) {
 
   // tampilkan hasil deteksi
   if (this->incoming || this->outcoming) {
-    Serial.println(incoming ? "Selamat Datang" : "Terima Kasih");
-    digitalWrite(this->LED_PINS[0], incoming ? HIGH : LOW);
-    digitalWrite(this->LED_PINS[1], outcoming ? HIGH : LOW);
+    Serial.println(this->incoming ? "Selamat Datang" : "Terima Kasih");
+    digitalWrite(this->LED_PINS[0], this->incoming ? HIGH : LOW);
+    digitalWrite(this->LED_PINS[1], this->outcoming ? HIGH : LOW);
 
     // reset flag setelah mencetak pesan
     this->sensorDetected1 = this->sensorDetected2 = this->incoming = this->outcoming = false;
