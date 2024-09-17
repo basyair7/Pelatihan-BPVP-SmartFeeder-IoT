@@ -22,8 +22,8 @@ void MyProgram::test1(void) {
   float getDistance2 = this->getDistance(this->TRIGGER_PINS[1], this->ECHO_PINS[1]);
 
   // cek setiap 500ms untuk kedua sensor
-  if ((unsigned long) (millis() - this->LastTime1) > 500) {
-    this->LastTime1 = millis();
+  if ((unsigned long)(millis() - this->LastTime_GetDistance) > 500) {
+    this->LastTime_GetDistance = millis();
 
     if (getDistance1 < 20 || getDistance2 < 20) {
       // sensor 2 terpicu, menunggu sensor 1 untuk outcoming
@@ -44,10 +44,11 @@ void MyProgram::test1(void) {
     }
   }
 
-
   // tampilkan hasil deteksi
   if (this->incoming || this->outcoming) {
     Serial.println(incoming ? "Selamat Datang" : "Terima Kasih");
+    digitalWrite(this->LED_PINS[0], incoming ? HIGH : LOW);
+    digitalWrite(this->LED_PINS[1], outcoming ? HIGH : LOW);
 
     // reset flag setelah mencetak pesan
     this->sensorDetected1 = this->sensorDetected2 = this->incoming = this->outcoming = false;

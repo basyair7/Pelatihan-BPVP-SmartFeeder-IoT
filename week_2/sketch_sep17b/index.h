@@ -25,7 +25,8 @@ private:
   void test1(void);
 
 private:
-  unsigned long LastTime1 = 0, LastTime2 = 0;
+  bool LEDState1 = false, LEDState2 = false;
+  unsigned long LastTime_GetDistance = 0, LastTime_LED1 = 0, LastTime_LED2 = 0;
 
 private:
   float getDistance(uint8_t triggerPin, uint8_t echoPin);
