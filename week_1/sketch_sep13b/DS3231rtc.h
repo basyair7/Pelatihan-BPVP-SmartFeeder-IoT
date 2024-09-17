@@ -27,7 +27,7 @@ public:
   }
 
   // function to get the current date
-  void date(uint8_t* day, uint8_t* month, uint8_t* year) {
+  void date(uint8_t* day, uint8_t* month, uint16_t* year) {
     this->now = _rtc.now();
     if (day != nullptr)   *day   = now.day();
     if (month != nullptr) *month = now.month();
