@@ -70,9 +70,9 @@ float MyProgram::getDistance(uint8_t triggerPin, uint8_t echoPin) {
   float _time, value;
 
   // Trigger Program
-  digitalWrite(triggerPin, HIGH);
-  delayMicroseconds(2);
   digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(triggerPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(triggerPin, LOW);
 
