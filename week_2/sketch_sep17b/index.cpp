@@ -18,44 +18,51 @@ void MyProgram::_setup(void) {
 }
 
 void MyProgram::test1(void) {
-  const int LimitDistance = 7; // 7 cm
+  float getDistance1 = this->getDistance(this->TRIGGER_PINS[0], this->ECHO_PINS[0]);
+  float getDistance2 = this->getDistance(this->TRIGGER_PINS[1], this->ECHO_PINS[1]);
 
-  // cek setiap 500ms untuk kedua sensor
-  if ((unsigned long)(millis() - this->LastTime_GetDistance) > 500) {
-    this->LastTime_GetDistance = millis();
-    
-    float getDistance1 = this->getDistance(this->TRIGGER_PINS[0], this->ECHO_PINS[0]);
-    float getDistance2 = this->getDistance(this->TRIGGER_PINS[1], this->ECHO_PINS[1]);
-    Serial.print(F("SENSOR 1 : ")); Serial.println(getDistance1);
-    Serial.print(F("SENSOR 2 : ")); Serial.println(getDistance2);
+  const float LimitDistance = 5.0; // 5cm
 
-    if (getDistance1 < LimitDistance || getDistance2 < LimitDistance) {
-      // sensor 2 terpicu, menunggu sensor 1 untuk outcoming
-      if (getDistance2 < LimitDistance && !this->sensorDetected1 && !this->sensorDetected2) {
-        this->sensorDetected1 = true;
-      }
-      else if (getDistance1 < 20 && this->sensorDetected1) {
-        this->outcoming = true;
-      }
+  if (getDistance1 < LimitDistance || getDistance2 < LimitDistance) {
+    // sensor 1 terpicu, menunggu sensor 2 untuk incoming
+    if (getDistance1 < LimitDistance && !this->sensorDetected1) {
+      this->sensorDetected1 = true;
+    }
 
-      // sensor 1 terpicu, menunggu sensor 2 untuk incoming
-      if (getDistance1 < LimitDistance && !this->sensorDetected1 && !this->sensorDetected2) {
-        this->sensorDetected2 = true;
-      }
-      else if (getDistance2 < LimitDistance && this->sensorDetected2) {
-        this->incoming = true;
-      }
+    if (getDistance2 < LimitDistance && this->sensorDetected1) {
+      this->incoming = true;
+    }
+
+    // sensor 2 terpicu, menunggu sensor 1 untuk outcoming
+    if (getDistance2 < LimitDistance && !this->sensorDetected2) {
+      this->sensorDetected2 = true;
+    }
+
+    if (getDistance1 < LimitDistance && this->sensorDetected2) {
+      this->outcoming = true;
     }
   }
 
-  // tampilkan hasil deteksi
-  if (this->incoming || this->outcoming) {
-    Serial.println(this->incoming ? "Selamat Datang" : "Terima Kasih");
-    digitalWrite(this->LED_PINS[0], this->incoming ? HIGH : LOW);
-    digitalWrite(this->LED_PINS[1], this->outcoming ? HIGH : LOW);
+  // jalankan program led / pesan "selamat datang"
+  if (this->incoming) {
+    Serial.println(F("Selamat Datang"));
+    digitalWrite(this->LED_PINS[0], HIGH);
+    delay(2000);
+    digitalWrite(this->LED_PINS[0], LOW);
 
-    // reset flag setelah mencetak pesan
-    this->sensorDetected1 = this->sensorDetected2 = this->incoming = this->outcoming = false;
+    // reset flag incoming beserta sensorDetected
+    this->incoming = this->sensorDetected1 = this->sensorDetected2 = false;
+  }
+
+  // jalankan program led / pesan "selamat jalan"
+  if (this->outcoming) {
+    Serial.println(F("Selamat Jalan"));
+    digitalWrite(this->LED_PINS[1], HIGH);
+    delay(2000);
+    digitalWrite(this->LED_PINS[1], LOW);
+
+    // reset flag outcoming beserta sensorDetected
+    this->outcoming = this->sensorDetected1 = this->sensorDetected2 = false;
   }
 }
 
@@ -67,6 +74,7 @@ float MyProgram::getDistance(uint8_t triggerPin, uint8_t echoPin) {
   delayMicroseconds(2);
   digitalWrite(triggerPin, LOW);
   delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
 
   // Echo program
   _time = pulseIn(echoPin, HIGH);

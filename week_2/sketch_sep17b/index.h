@@ -23,13 +23,11 @@ private:
 private:
   void _setup(void);
   void test1(void);
-
-private:
-  bool LEDState1 = false, LEDState2 = false;
-  unsigned long LastTime_GetDistance = 0, LastTime_LED1 = 0, LastTime_LED2 = 0;
-
-private:
   float getDistance(uint8_t triggerPin, uint8_t echoPin);
+
+private:
+  // flag untuk Sensor Ultrasonic
   bool sensorDetected1 = false, sensorDetected2 = false;
-  bool incoming  = false, outcoming = false;
+  bool incoming = false, outcoming = false;
+  
 };
