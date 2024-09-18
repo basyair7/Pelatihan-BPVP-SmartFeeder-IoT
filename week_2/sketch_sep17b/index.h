@@ -16,9 +16,9 @@ public:
   }
 
 private:
-  const uint16_t TRIGGER_PINS[2] = { 7, 9 };
-  const uint16_t ECHO_PINS[2]    = { 6, 10 };
-  const uint16_t LED_PINS[2]     = { 3, 4 };
+  const uint16_t TRIGGER_PINS[2] = { 4, 6 };
+  const uint16_t ECHO_PINS[2]    = { 5, 7 };
+  const uint16_t LED_PINS[2]     = { 2, 3 };
 
 private:
   void _setup(void);
