@@ -18,6 +18,7 @@ void MyProgram::_setup(void) {
 }
 
 void MyProgram::test1(void) {
+  // ambil data sensor ultrasonic
   float getDistance1 = this->getDistance(this->TRIGGER_PINS[0], this->ECHO_PINS[0]);
   float getDistance2 = this->getDistance(this->TRIGGER_PINS[1], this->ECHO_PINS[1]);
 
@@ -64,6 +65,8 @@ void MyProgram::test1(void) {
     // reset flag outcoming beserta sensorDetected
     this->outcoming = this->sensorDetected1 = this->sensorDetected2 = false;
   }
+
+  delay(50);
 }
 
 float MyProgram::getDistance(uint8_t triggerPin, uint8_t echoPin) {
