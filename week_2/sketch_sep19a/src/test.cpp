@@ -1,15 +1,14 @@
-#include "Arduino.h"
+#include "index.h"
 #include "envBlynk.h"
 #include "BlynkSimpleEsp8266.h"
-#include "WiFiProgram.h"
-#include "ultrasonic.h"
 
 #define TRIGGER_PIN   D5
 #define ECHO_PIN      D6
 
 Ultrasonic* hcsr04_1 = new Ultrasonic(TRIGGER_PIN, ECHO_PIN);
-ProgramWiFi* programWiFi = new ProgramWiFi();
-BlynkTimer timer;
+
+BlynkTimer TIMER;
+ProgramWiFi WIFIPROGRAM;
 
 void bacaSensor(void) {
   float getDistance = hcsr04_1->getDistance();
@@ -21,18 +20,16 @@ void bacaSensor(void) {
   delay(100);
 }
 
-void setup() {
-  // put your setup code here, to run once:
+void MyProgram::_setup(void) {
   Serial.begin(9600);
   hcsr04_1->begin();
-  programWiFi->begin();
-  Blynk.begin(BLYNK_AUTH_TOKEN, programWiFi->SSID.c_str(), programWiFi->PASSWORD.c_str());
+  WIFIPROGRAM.begin();
+  Blynk.begin(BLYNK_AUTH_TOKEN, WIFIPROGRAM.SSID.c_str(), WIFIPROGRAM.PASSWORD.c_str());
 
-  timer.setInterval(100L, bacaSensor);
+  TIMER.setInterval(100L, bacaSensor);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void MyProgram::_loop(void) {
   Blynk.run();
-  timer.run();
+  TIMER.run();
 }
