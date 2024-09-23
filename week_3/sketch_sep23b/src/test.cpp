@@ -5,7 +5,7 @@ void MyProgram::_setup() {
     rtc.begin();
     // rtc.manualAdjust(9, 23, 2024, 15, 16, 5);
     // rtc.autoAdjust();
-    stepper->setSpeed(15);
+    stepper->setSpeed(10);
 }
 
 void MyProgram::test1() {
@@ -29,7 +29,7 @@ void MyProgram::test2() {
         Serial.println(rtc.timestr());
         Serial.println();
 
-        if (this->hour == 15 && this->minute == 9 && this->second == 5) {
+        if (this->hour == 15 && this->minute == 22 && this->second == 30) {
             this->stateStepper = true;
             this->LastTimeStepperUP = currentTime;
         }
