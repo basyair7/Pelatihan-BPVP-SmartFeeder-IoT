@@ -18,12 +18,14 @@ public:
     static void loop() {
         // instance().test1();
         instance().test2();
+        // instance().test3();
     }
 
 private:
     void _setup(void);
     void test1(void);
     void test2(void);
+    void test3(void);
 
     float stepsToDegress(int number_of_steps, int degrees) {
         return (float)number_of_steps * ((float)degrees / 360.0);

@@ -22,6 +22,13 @@ public:
     return _rtc.now();
   }
 
+  void manualAdjust(
+    uint8_t month, uint8_t day, uint16_t year, 
+    uint8_t hour, uint8_t minute, uint8_t second)
+  {
+    _rtc.adjust(DateTime(year, month, day, hour, minute, second));
+  }
+
   // function to automatically adjust RTC time
   void autoAdjust()  {
     _rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
