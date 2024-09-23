@@ -27,7 +27,7 @@ void MyProgram::test2() {
         Serial.println(rtc.timestr());
         Serial.println();
 
-        if (this->hour == 13 && this->minute == 12 && this->second == 0) {
+        if (this->hour == 13 && this->minute == 20 && this->second == 0) {
             this->stateStepper = true;
             this->LastTimeStepperUP = currentTime;
         }

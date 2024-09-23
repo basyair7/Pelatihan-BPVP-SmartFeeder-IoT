@@ -25,8 +25,8 @@ private:
     void test1(void);
     void test2(void);
 
-    float stepsToDegress(int number_of_steps, int steps) {
-        return map(steps, 0, 360, 0, number_of_steps);
+    float stepsToDegress(int number_of_steps, int degrees) {
+        return (float)number_of_steps * ((float)degrees / 360.0);
     }
 
 private:
