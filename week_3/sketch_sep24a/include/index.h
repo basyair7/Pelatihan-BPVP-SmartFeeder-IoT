@@ -24,7 +24,7 @@ private:
 	void main(void);
 
 private:
-	const String List_Time[3] = {"7:15:0", "15:30:0", "20:0:0"};
+    const String List_Time[3] = {"7:15:0", "15:30:0", "20:0:0"};
     const int16_t PINOUT_STEPPER[4] = {8,10,11,9};
     MyStepper stepper = MyStepper(
         STEPS, 
