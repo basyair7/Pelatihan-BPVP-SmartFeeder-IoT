@@ -34,8 +34,6 @@ private:
         PINOUT_STEPPER[3]
     );
     DS3231rtc rtc;
-    int hour, minute, second;
-    String timestr;
 
 private:
     unsigned long LastTimeRTC = 0, LastTimeStepper = 0;
