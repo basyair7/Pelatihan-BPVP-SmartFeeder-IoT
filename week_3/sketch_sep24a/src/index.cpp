@@ -25,14 +25,14 @@ void MyProgram::main(void) {
 	}
 	
 	if (this->stateStepper && (unsigned long) (millis() - this->LastTimeStepper) <= 3000) {
-		stepper.step(180);
+		stepper.step(360);
 	}
 	
 	if (this->stateStepper && 
 	   (unsigned long) (millis() - this->LastTimeStepper) > 6000 && 
 	   (unsigned long) (millis() - this->LastTimeStepper) <= 9000)
 	{
-		stepper.step(-180);
+		stepper.step(-360);
 		this->stateStepper = false;
 	}
 	
