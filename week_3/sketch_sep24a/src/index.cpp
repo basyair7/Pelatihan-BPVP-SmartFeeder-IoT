@@ -2,7 +2,7 @@
 
 void MyProgram::_setup(void) {
 	Serial.begin(9600);
-	stepper.setSpeed(30);
+	stepper.setSpeed(10);
 	// rtc.begin();
 }
 
@@ -42,6 +42,7 @@ void MyProgram::main(void) {
 void MyProgram::debbugStepper(void) {
 	const int degress = 180;
 	stepper.step(degress);
+	delay(1500);
 	stepper.step(-degress);
 	delay(10000);
 
