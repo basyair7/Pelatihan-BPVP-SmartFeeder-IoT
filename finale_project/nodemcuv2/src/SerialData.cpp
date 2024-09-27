@@ -18,7 +18,7 @@ void SerialData::runSendData(long __delay__) {
 
         data["distance"]        = this->__distance__;
         data["blynk"]["auto"]   = this->__auto__;
-        data["blynk"]["open"]   = this->__switch__;
+        data["blynk"]["switch"]   = this->__switch__;
 
         serializeJson(data, myserial);
     }
