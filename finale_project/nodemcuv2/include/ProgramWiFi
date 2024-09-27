@@ -1,0 +1,36 @@
+/*! @file programWiFi.hpp
+ *  @version 3.0.15
+*/
+
+#pragma once
+
+#include <Arduino.h>
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <functional>
+#include <variable.h>
+#include <TypeSerial>
+
+class ProgramWiFi {
+    private:
+        WiFiEventHandler wifiConnectHandler, wifiDisconnectHandler;
+        void onWiFiConnect(const WiFiEventStationModeGotIP& event);
+        void onWiFiDisconnect(const WiFiEventStationModeDisconnected& event);
+        void Mode_AP(), Mode_STA();
+
+    public:
+        void setup(const String SSID, const String PASSWORD_SSID, const String NAME_AP, const String PASSWORD_AP);
+        void initWiFi(bool state);
+        void optimizeWiFi(WiFiSleepType_t type, bool persistentWiFi) {
+            WiFi.setSleepMode(type);
+            WiFi.persistent(persistentWiFi);
+        }
+};
+
+extern String ssid_sta, password_sta;
+extern String LOCALIPServer;
+extern String Name_AP, Password_AP;
+extern bool WifiState;
+
+
+#endif
