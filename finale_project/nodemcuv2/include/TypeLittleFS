@@ -19,5 +19,3 @@ extern "C" {
     #define LFS_READ "r"
     #define LFS_WRITE "w"
 }
-
-#endif

@@ -2,34 +2,29 @@
  *  @version 3.0.15
 */
 
-#include <programWiFi>
-#include <BootButton>
-
-String ssid_sta, password_sta;
-String Name_AP, Password_AP;
-String LOCALIPServer;
-bool WifiState;
+#include <ProgramWiFi.h>
+#include <BootButton.h>
 
 // run program if WiFi connecting 
 void ProgramWiFi::onWiFiConnect(const WiFiEventStationModeGotIP& event) 
 {
-    TSprintln(F(""));
-    TSprint(F("Connected to : ")); TSprintln(ssid_sta);
-    TSprint(F("IP Address : ")); TSprint(event.ip);
-    LOCALIPServer = event.ip.toString().c_str();
+    Serial.println(F(""));
+    Serial.print(F("Connected to : ")); Serial.println(this->__SSID_STA__);
+    Serial.print(F("IP Address : ")); Serial.println(event.ip);
+    this->LOCALIPServer = event.ip.toString().c_str();
 }
 
 // run prorgam if WiFi disconnect
 void ProgramWiFi::onWiFiDisconnect(const WiFiEventStationModeDisconnected& event) 
 {
     WiFi.disconnect();
-    WiFi.begin(ssid_sta, password_sta);
+    WiFi.begin(this->__SSID_STA__, this->__PASSWORD_STA__);
 }
 
-void ProgramWiFi::setup(const String SSID, const String PASSWORD_SSID, const String NAME_AP, const String PASSWORD_AP) 
+void ProgramWiFi::setup(const String __SSID_STA__, const String __PASSWORD_STA__, const String __SSID_AP__, const String __PASSWORD_AP__) 
 {
-    ssid_sta = SSID; password_sta = PASSWORD_SSID;
-    Name_AP = NAME_AP; Password_AP = PASSWORD_AP;
+    this->__SSID_STA__ = __SSID_STA__; this->__PASSWORD_STA__ = __PASSWORD_STA__;
+    this->__SSID_AP__  = __SSID_AP__; this->__PASSWORD_AP__ = __PASSWORD_AP__;
 }
 
 // run program mode STA
@@ -44,25 +39,17 @@ void ProgramWiFi::Mode_STA() {
     wifiDisconnectHandler = WiFi.onStationModeDisconnected(std::bind(&ProgramWiFi::onWiFiDisconnect, this, std::placeholders::_1));
 
     // initializing WiFi and Connecting to an SSID
-    WiFi.begin(ssid_sta, password_sta);
+    WiFi.begin(this->__SSID_STA__, this->__PASSWORD_STA__);
     Serial.print(F("Connecting to WiFi..."));
     while(WiFi.status() != WL_CONNECTED) {
         bootbutton.WiFiMode();
-        TSprint(F("."));
+        Serial.print(F("."));
         delay(500);
     }
 
     // RSSI
     Serial.print(F("\nRRSI : "));
     Serial.println(WiFi.RSSI());
-
-    // initializing Access Point
-    // WiFi.softAP(Name_AP, Password_AP);
-    // get IP Address
-    // LOCALIPServer = WiFi.softAPIP().toString().c_str();
-    // Serial.print(F("IP Address Server : "));
-    // Serial.println(LOCALIPServer);
-    // Serial.println();
 }
 
 // run program mode AP
@@ -71,12 +58,12 @@ void ProgramWiFi::Mode_AP() {
     WiFi.mode(WIFI_AP);
     
     // initializing Access Point
-    WiFi.softAP(Name_AP, Password_AP);
+    WiFi.softAP(this->__SSID_AP__, this->__PASSWORD_AP__);
 
     // get IP Address
-    LOCALIPServer = WiFi.softAPIP().toString().c_str();
+    this->LOCALIPServer = WiFi.softAPIP().toString().c_str();
     Serial.print(F("IP Address : "));
-    Serial.println(LOCALIPServer);
+    Serial.println(this->LOCALIPServer);
     Serial.println();
 }
 
@@ -85,7 +72,6 @@ void ProgramWiFi::Mode_AP() {
  * Mode AP STA = false
 */
 void ProgramWiFi::initWiFi(bool state) {
-    LEDBoard ledboard;
     WifiState = state;
     Serial.print(F("\nMode WiFi : "));
     Serial.println(state ? "MODE_AP" : "MODE_STA");

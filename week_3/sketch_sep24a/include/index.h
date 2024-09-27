@@ -16,12 +16,14 @@ public:
     }
 
     static void loop() {
-        instance().main();
+        // instance().main();
+        instance().debbugStepper();
     }
 
 private:
     void _setup(void);
 	void main(void);
+    void debbugStepper(void);
 
 private:
     const String List_Time[3] = {"7:15:0", "15:30:0", "20:0:0"};

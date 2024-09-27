@@ -2,11 +2,10 @@
  *  @version 3.0.15
 */
 
-#ifndef BOOTBUTTON_HPP
-#define BOOTBUTTON_HPP
+#pragma once
 
 #include <Arduino.h>
-#include <LittleFS.hpp>
+#include <EEPROM.h>
 #include <pushbutton.h>
 #include <variable.h>
 
@@ -16,7 +15,7 @@ public:
     
     void begin() {
         bootBtn.init();
-        wifiState = AP_MODE_STATE;
+        wifiState = EEPROM.read(EEPROM_BLYNK_ADDR);
     }
     
     void WiFiMode() {
@@ -27,9 +26,9 @@ public:
         if (buttonChange) {
             if (currentButtonState == LOW) {
                 wifiState = !wifiState;
-                lfs_change_config_state.changeconfigState("WIFI_AP", wifiState);
-                TSprintln(F("Change Mode WiFi : "));
-                TSprintln(wifiState ? "MODE_AP" : "MODE_AP_STA");
+                EEPROM.write(EEPROM_BLYNK_ADDR, wifiState);
+                Serial.println(F("Change Mode WiFi : "));
+                Serial.println(wifiState ? "MODE BLYNK : DISABLE" : "MODE BLYNK : ENABLE");
                 delay(2000);
                 ESP.reset();
             }
@@ -40,11 +39,8 @@ public:
     
 private:
     PushButtonDigital bootBtn;
-    LFSProgram lfs_change_config_state;
     bool currentButtonState = false;
     bool lastButtonState    = false;
     bool buttonChange       = false;
     bool wifiState          = false;
 };
-
-#endif

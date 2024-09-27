@@ -9,7 +9,6 @@
 #include <WiFiClient.h>
 #include <functional>
 #include <variable.h>
-#include <TypeSerial>
 
 class ProgramWiFi {
     private:
@@ -19,18 +18,16 @@ class ProgramWiFi {
         void Mode_AP(), Mode_STA();
 
     public:
-        void setup(const String SSID, const String PASSWORD_SSID, const String NAME_AP, const String PASSWORD_AP);
+        void setup(const String __SSID_STA__, const String __PASSWORD_STA__, const String __SSID_AP__, const String __PASSWORD_AP__);
         void initWiFi(bool state);
         void optimizeWiFi(WiFiSleepType_t type, bool persistentWiFi) {
             WiFi.setSleepMode(type);
             WiFi.persistent(persistentWiFi);
         }
+
+    public:
+        String __SSID_STA__, __PASSWORD_STA__;
+        String __SSID_AP__, __PASSWORD_AP__;
+        String LOCALIPServer;
+        bool WifiState;
 };
-
-extern String ssid_sta, password_sta;
-extern String LOCALIPServer;
-extern String Name_AP, Password_AP;
-extern bool WifiState;
-
-
-#endif
