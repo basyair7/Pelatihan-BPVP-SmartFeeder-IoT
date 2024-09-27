@@ -2,4 +2,4 @@
 # env::<board type?>
 # esp32doit-devkit-v1, nodemcuv2, uno
 
-$global:BOARDTYPE = "megaatmega2560"
+$global:BOARDTYPE = "uno"
