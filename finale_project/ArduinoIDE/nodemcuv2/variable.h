@@ -12,8 +12,8 @@
 #define TRIG_PIN          D7
 #define ECHO_PIN          D8
 
-#define RX_TX             D5
-#define TX_RX             D6
+#define RX_TX             D6
+#define TX_RX             D5
 
 #define BOOTBUTTON        D3
 

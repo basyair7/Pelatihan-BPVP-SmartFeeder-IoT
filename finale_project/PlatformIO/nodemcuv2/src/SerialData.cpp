@@ -5,6 +5,10 @@
 #include "SerialData.h"
 #include <ArduinoJson.h>
 
+void SerialData::begin(uint32_t baudRate) {
+    this->__mySerial__.begin(baudRate);
+}
+
 void SerialData::setDistance(float distance) {
     this->__distance__ = distance;
 }
@@ -34,6 +38,6 @@ void SerialData::runSendData(long __delay__) {
 		data["timers"]["timer2"] = this->__Timer2__;
 		data["timers"]["timer3"] = this->__Timer3__;
 
-        serializeJson(data, myserial);
+        serializeJson(data, this->__mySerial__);
     }
 }

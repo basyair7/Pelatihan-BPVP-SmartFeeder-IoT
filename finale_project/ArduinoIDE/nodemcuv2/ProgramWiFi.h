@@ -72,7 +72,7 @@ private:
     WiFi.begin(this->__SSID_STA__.c_str(), this->__PASSWORD_STA__.c_str());
 
     Serial.print(F("Connecting to WiFi..."));
-    while(WiFi.status() != WL_CONNECTED) {
+    while (WiFi.status() != WL_CONNECTED) {
       bootbutton.WiFiMode();
       Serial.print(F("."));
       delay(500);

@@ -10,7 +10,8 @@
 
 #include "ProgramWiFi.h"
 #include "WebServer.h"
-#include "SerialData.h"
+// #include "SerialData.h"
+#include "I2C_Master.h"
 
 #include "WIFISETTING.h"
 #include "variable.h"
@@ -23,7 +24,8 @@ BlynkTimer TIMER;
 
 ProgramWiFi programWiFi;
 WebServer webServer(80);
-SerialData serialData(RX_TX, TX_RX);
+// SerialData serialData(RX_TX, TX_RX);
+I2C_Master i2cMaster(8);
 
 BootButton bootBtn(BOOTBUTTON, INPUT);
 Ultrasonic ultrasonic(TRIG_PIN, ECHO_PIN);
@@ -74,7 +76,7 @@ void __monitor_data__(void) {
     Serial.println(F(" cm"));
     Serial.print(F("Capacity : "));
     Serial.print(capacity);
-    Serial.println("%");
+    Serial.println(F("%"));
 
     Serial.println();
     Serial.print(F("Auto : "));
@@ -113,8 +115,11 @@ BLYNK_WRITE(V3) {
 
 void __setup__() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
-  while(!LFS.begin()) {  
+  Serial.begin(9600);
+  // serialData.begin(9600);
+  i2cMaster.begin(D5, D6);
+
+  while (!LFS.begin()) {  
     Serial.println(F("Error initializing LittleFS, please try again..."));
     delay(500);
   }
@@ -147,10 +152,14 @@ void __loop__() {
   __monitor_data__();
 
   // send data to atmega328p
-  serialData.setDistance(distance);
-  serialData.setBlynkCmd(__auto_state__, __switch_state__);
+  // serialData.setCapacity(capacity);
+  // serialData.setBlynkCmd(__auto_state__, __switch_state__);
   // serialData.setTimeAuto("7:0:0", "12:0:0", "17:0:0");
-  serialData.runSendData(100);
+  // serialData.runSendData(100);
+
+  i2cMaster.setCapacity(capacity);
+  i2cMaster.setBlynkCmd(__auto_state__, __switch_state__);
+  i2cMaster.runSendData(100);
 
   if (WiFi.getMode() == WIFI_STA) {
     Blynk.run();

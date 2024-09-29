@@ -6,14 +6,15 @@
 
 #include <Arduino.h>
 
-inline const LIST_
+#define TRIG_PIN          5
+#define ECHO_PIN          4
 
-#define RX_TX             D5
-#define TX_RX             D6
+#define LED_RED           3
+#define LED_GREEN         2
 
-#define BOOTBUTTON        D3
+#define RX_TX             3
+#define TX_RX             2
 
-#define EMPTY             14    // cm
-#define FULL              5     // cm
+#define DEGRESS_STEPPER   360
 
-#define EEPROM_BLYNK_ADDR 0x4   // don't replace it...
+inline const int16_t PINOUT_STEPPER[4] = {8, 10, 9, 11};
