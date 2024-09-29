@@ -108,6 +108,9 @@ void WebServer::Serverinit() {
   // EnableBlynk
   serverAsync.on("/enable-blynk", HTTP_GET, bind(&WebServer::EnableBlynk, this, placeholders::_1));
 
+  // Reboot nodemcu
+  serverAsync.on("/rst-webserver", HTTP_GET, bind(&WebServer::Reboot, this, placeholders::_1));
+
   // get css file and javascripts file
   // css
   serverAsync.serveStatic("/css/recovery.css", LFS, "/WEB/css/recovery.css");
