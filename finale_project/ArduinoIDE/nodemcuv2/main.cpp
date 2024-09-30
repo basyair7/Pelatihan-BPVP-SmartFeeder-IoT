@@ -25,7 +25,7 @@ BlynkTimer TIMER;
 ProgramWiFi programWiFi;
 WebServer webServer(80);
 // SerialData serialData(RX_TX, TX_RX);
-I2C_Master i2cMaster(8);
+I2C_Master i2cMaster(0x08);
 
 BootButton bootBtn(BOOTBUTTON, INPUT);
 Ultrasonic ultrasonic(TRIG_PIN, ECHO_PIN);
@@ -117,7 +117,7 @@ void __setup__() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   // serialData.begin(9600);
-  i2cMaster.begin(D5, D6);
+  i2cMaster.begin(SDA_PIN, SCL_PIN);
 
   while (!LFS.begin()) {  
     Serial.println(F("Error initializing LittleFS, please try again..."));

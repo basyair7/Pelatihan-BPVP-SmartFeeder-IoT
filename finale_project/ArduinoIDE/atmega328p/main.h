@@ -25,8 +25,8 @@ public:
   }
 
   static void loop() {
-    // instance().__main__();
-    instance().__debug__();
+    instance().__main__();
+    // instance().__debug__();
   }
 
 private:
@@ -40,7 +40,6 @@ private:
   );
   DS3231rtc rtc;
   // SerialData serialData = SerialData(RX_TX, TX_RX);
-  I2C_Slave i2cSlave = I2C_Slave(8);
   
   unsigned long LastTimeRTC = 0, LastTimeMonitor = 0;
   unsigned long LastTimeStepper1 = 0, LastTimeStepper2 = 0;

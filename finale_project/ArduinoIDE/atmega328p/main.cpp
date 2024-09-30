@@ -3,23 +3,25 @@
 */
 
 #include "main.h"
+#include <ArduinoJson.h>
 
-String Timer1, Timer2, Timer3;
 bool auto_state, switch_state;
 int capacity;
 
 void MyProgram::__autoFeeder__(void) {
-  if ((unsigned long) (millis() - this->LastTimeRTC) >= 1000) {
-    this->LastTimeRTC = millis();
-    Serial.println(this->rtc.getDayOfWeek());
-    Serial.print(F("Date : "));
-    Serial.println(this->rtc.datestr());
-    Serial.print(F("Time : "));
-    Serial.println(this->rtc.timestr());
+  for (const auto listTime : ListTime) {
+    if ((unsigned long) (millis() - this->LastTimeRTC) >= 1000) {
+      this->LastTimeRTC = millis();
+      Serial.println(this->rtc.getDayOfWeek());
+      Serial.print(F("Date : "));
+      Serial.println(this->rtc.datestr());
+      Serial.print(F("Time : "));
+      Serial.println(this->rtc.timestr());
 
-    if (this->rtc.timestr() == Timer1 || this->rtc.timestr() == Timer2 || this->rtc.timestr() == Timer3) {
-      this->stateStepper1 = true;
-      this->LastTimeStepper1 = millis();
+      if (this->rtc.timestr() == listTime) {
+        this->stateStepper1 = true;
+        this->LastTimeStepper1 = millis();
+      }
     }
   }
 
@@ -69,18 +71,15 @@ void MyProgram::__monitor__(void) {
 void MyProgram::__setup__(void) {
   Serial.begin(9600);
   // serialData.begin(9600);
-  i2cSlave.begin();
+  I2CSlave_Init(I2C_MASTER_ADDR);
 
   this->stepper.setSpeed(10);
-  // this->rtc.begin();
+  this->rtc.begin();
 }
 
 void MyProgram::__main__(void) {
-  // serialData.reqData();
-  // serialData.getData(50);
-  // serialData.getBlynkCmd(&auto_state, &switch_state);
-  // serialData.getTimeAuto(&Timer1, &Timer2, &Timer3);
-  // capacity = serialData.getCapacity();
+  I2CSlave_getData(&capacity, &auto_state, &switch_state);
+  this->__monitor__();
 
   if (capacity >= 0) {
     if (auto_state) {
@@ -94,7 +93,7 @@ void MyProgram::__main__(void) {
     }
   }
   
-  delay(50);
+  delayMicroseconds(50);
 }
 
 void MyProgram::__debug__() {
@@ -105,11 +104,7 @@ void MyProgram::__debug__() {
   // serialData.getTimeAuto(&Timer1, &Timer2, &Timer3);
   // capacity = serialData.getCapacity();
 
-  i2cSlave.run();
-
-  i2cSlave.getBlynkCmd(&auto_state, &switch_state);
-  i2cSlave.getTimeAuto(&Timer1, &Timer2, &Timer3);
-  capacity = i2cSlave.getCapacity();
+  I2CSlave_getData(&capacity, &auto_state, &switch_state);
 
   this->__monitor__();
 

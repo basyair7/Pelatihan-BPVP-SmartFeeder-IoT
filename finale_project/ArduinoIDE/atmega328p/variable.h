@@ -17,4 +17,7 @@
 
 #define DEGRESS_STEPPER   360
 
+#define I2C_MASTER_ADDR   0x08
+
 inline const int16_t PINOUT_STEPPER[4] = {8, 10, 9, 11};
+inline const String ListTime[3]        = {"7:0:0", "12:0:0", "17:0:0"};
