@@ -12,12 +12,6 @@ void MyProgram::__autoFeeder__(void) {
   for (const auto listTime : ListTime) {
     if ((unsigned long) (millis() - this->LastTimeRTC) >= 1000) {
       this->LastTimeRTC = millis();
-      Serial.println(this->rtc.getDayOfWeek());
-      Serial.print(F("Date : "));
-      Serial.println(this->rtc.datestr());
-      Serial.print(F("Time : "));
-      Serial.println(this->rtc.timestr());
-
       if (this->rtc.timestr() == listTime) {
         this->stateStepper1 = true;
         this->LastTimeStepper1 = millis();
@@ -65,6 +59,11 @@ void MyProgram::__monitor__(void) {
     Serial.println(F("%"));
     
     Serial.println();
+    Serial.println(this->rtc.getDayOfWeek());
+    Serial.print(F("Date : "));
+    Serial.println(this->rtc.datestr());
+    Serial.print(F("Time : "));
+    Serial.println(this->rtc.timestr());
   }
 }
 
@@ -81,7 +80,7 @@ void MyProgram::__main__(void) {
   I2CSlave_getData(&capacity, &auto_state, &switch_state);
   this->__monitor__();
 
-  if (capacity >= 0) {
+  if (capacity > 0) {
     if (auto_state) {
       this->__autoFeeder__();
     }
