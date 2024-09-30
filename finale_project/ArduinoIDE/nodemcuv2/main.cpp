@@ -32,7 +32,7 @@ Ultrasonic ultrasonic(TRIG_PIN, ECHO_PIN);
 
 unsigned long LastTimeGetDistance = 0, LastTimeSendCapacity = 0;
 unsigned long LastTimeLED = 0, LastTimeMonitor = 0;
-bool __switch_state__ = false, __auto_state__ = false;
+bool __switch_state__ = false, __auto_state__ = false, ESPRestart = false;
 float distance; int capacity;
 
 void __indikator__(void) {
@@ -40,13 +40,12 @@ void __indikator__(void) {
     LastTimeLED = millis();
 
     if (distance < FULL || distance > EMPTY) {
-      digitalWrite(LED_YELLOW, HIGH);
-      digitalWrite(LED_RED, LOW);
-    }
-
-    if (distance >= EMPTY + 1) {
       digitalWrite(LED_YELLOW, LOW);
       digitalWrite(LED_RED, HIGH);
+    }
+    else {
+      digitalWrite(LED_YELLOW, HIGH);
+      digitalWrite(LED_RED, LOW);
     }
   }
 }
@@ -58,7 +57,7 @@ void SwitchRecovery(bool state) {
 }
 
 void __get_capacity__() {
-  if ((unsigned long) (millis() - LastTimeGetDistance) >= 100) {
+  if ((unsigned long) (millis() - LastTimeGetDistance) >= 10) {
     LastTimeGetDistance = millis();
 
     distance = ultrasonic.getDistance();
@@ -111,6 +110,17 @@ BLYNK_WRITE(V3) {
   Blynk.virtualWrite(V3, 0);
   delay(5000);
   ESP.restart();
+}
+
+/* Mode Blynk (Push Button Mode) : Restart ESP */
+BLYNK_WRITE(V4) {
+  int paramBlynk = param.asInt();
+  ESPRestart = (paramBlynk == 1 ? true : false);
+  Blynk.virtualWrite(V4, 0);
+  delay(5000);
+  if (ESPRestart) {
+    ESP.restart();
+  }
 }
 
 void __setup__() {
@@ -170,4 +180,5 @@ void __loop__() {
     webServer.updateOTAloop();
   }
 
+  delayMicroseconds(50);
 }

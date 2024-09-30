@@ -30,9 +30,9 @@ public:
   }
 
   void runSendData(long __delay__) {
-    if ((unsigned long)(millis() - this->LastSendData) >= (unsigned long)__delay__) {
-      this->LastSendData = millis();
-      DynamicJsonDocument data(200);
+    if ((unsigned long)(millis() - this->LastTimeSendData) >= (unsigned long)__delay__) {
+      this->LastTimeSendData = millis();
+      DynamicJsonDocument data(this->__jsonSize__);
 
       data["c"] = this->__capacity__;
       data["a"] = this->__auto_state__;
@@ -50,7 +50,7 @@ public:
 private:
   int __capacity__;
   bool __auto_state__, __switch_state__;
-  unsigned long LastSendData = 0;
+  unsigned long LastTimeSendData = 0;
 
 private:
   uint8_t __address__;

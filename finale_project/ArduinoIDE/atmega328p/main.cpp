@@ -19,15 +19,20 @@ void MyProgram::__autoFeeder__(void) {
     }
   }
 
-  if (this->stateStepper1 && (unsigned long)(millis() - this->LastTimeStepper1) <= 3000) 
-  {
-    this->stepper.step(DEGRESS_STEPPER);
-  }
+  if (this->stateStepper1) {
+    for (int i = 0; i < 4; i++) {
+      if ((unsigned long)(millis() - this->LastTimeStepper1) <= 3000) 
+      {
+        this->stepper.step(DEGRESS_STEPPER);
+      }
 
-  if (this->stateStepper1 && (unsigned long)(millis() - this->LastTimeStepper1) > 6000 && (unsigned long)(millis() - this->LastTimeStepper1) <= 9000)
-  {
-    this->stepper.step(-DEGRESS_STEPPER);
-    this->stateStepper1 = false;
+      if ((unsigned long)(millis() - this->LastTimeStepper1) > 6000 && (unsigned long)(millis() - this->LastTimeStepper1) <= 9000)
+      {
+        this->stepper.step(-DEGRESS_STEPPER);
+      }
+
+      this->stateStepper1 = (i == 3 ? false : true);
+    }
   }
 }
 

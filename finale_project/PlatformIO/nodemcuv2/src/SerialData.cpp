@@ -9,8 +9,8 @@ void SerialData::begin(uint32_t baudRate) {
     this->__mySerial__.begin(baudRate);
 }
 
-void SerialData::setDistance(float distance) {
-    this->__distance__ = distance;
+void SerialData::setCapacity(float capacity) {
+    this->__capacity__ = capacity;
 }
 
 void SerialData::setBlynkCmd(bool auto_state, bool switch_state)
@@ -31,7 +31,7 @@ void SerialData::runSendData(long __delay__) {
         this->LastSendData = millis();
         StaticJsonDocument<500> data;
 
-        data["distance"]         = this->__distance__;
+        data["capacity"]         = this->__capacity__;
         data["blynk"]["auto"]    = this->__auto_state__;
         data["blynk"]["switch"]  = this->__switch_state__;
 		data["timers"]["timer1"] = this->__Timer1__;

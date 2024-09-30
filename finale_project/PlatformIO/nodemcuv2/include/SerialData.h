@@ -13,7 +13,7 @@ public:
     
     void begin(uint32_t baudRate);
 
-    void setDistance(float distance);
+    void setCapacity(float capacity);
 
     void setBlynkCmd(bool auto_state, bool switch_state);
 	
@@ -23,7 +23,7 @@ public:
 
 private:
     String __Timer1__ = "7:0:0", __Timer2__ = "12:0:0", __Timer3__ = "17:0:0";
-    float __distance__;
+    float __capacity__;
     bool __auto_state__, __switch_state__;
 	unsigned long LastSendData = 0;
     

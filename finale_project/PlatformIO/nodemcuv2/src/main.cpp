@@ -9,7 +9,8 @@
 #include "ultrasonic.h"
 #include "ProgramWiFi.h"
 #include "WebServer.h"
-#include "SerialData.h"
+// #include "SerialData.h"
+#include "I2C_Master.h"
 
 #include "WIFISETTING.h"
 #include "variable.h"
@@ -22,14 +23,15 @@ BlynkTimer TIMER;
 
 ProgramWiFi programWiFi;
 WebServer webServer(80);
-SerialData serialData(RX_TX, TX_RX);
+// SerialData serialData(RX_TX, TX_RX);
+I2C_Master i2cMaster(I2C_SLAVE_ADDR, JSONSIZE);
 
 BootButton bootBtn(BOOTBUTTON, INPUT);
 Ultrasonic ultrasonic(TRIG_PIN, ECHO_PIN);
 
 unsigned long LastTimeGetDistance = 0, LastTimeSendCapacity = 0;
 unsigned long LastTimeLED = 0, LastTimeMonitor = 0;
-bool __switch_state__ = false, __auto_state__ = false;
+bool __switch_state__ = false, __auto_state__ = false, ESPRestart = false;
 float distance; int capacity;
 
 void __indikator__(void) {
@@ -111,9 +113,22 @@ BLYNK_WRITE(V3) {
 	ESP.restart();
 }
 
+BLYNK_WRITE(V4) {
+	int paramBlynk = param.asInt();
+	ESPRestart = (paramBlynk == 1 ? true : false);
+	Blynk.virtualWrite(V4, 0);
+	delay(5000);
+	if (ESPRestart) {
+		ESP.restart();
+	}
+}
+
 void setup() {
 	// put your setup code here, to run once:
-	Serial.begin(115200);
+	Serial.begin(9600);
+	// serialData.begin(9600);
+	i2cMaster.begin(SDA_PIN, SCL_PIN);
+
 	while(!LFS.begin()) {
 		Serial.println(F("Error initializing LittleFS, please try again..."));
 		delay(500);
@@ -147,10 +162,14 @@ void loop() {
 	__monitor_data_();
 
 	// send data to atmega328p
-	serialData.setDistance(distance);
-	serialData.setBlynkCmd(__auto_state__, __switch_state__);
+	// serialData.setCapacity(capacity);
+	// serialData.setBlynkCmd(__auto_state__, __switch_state__);
 	// serialData.setTimeAuto("7:0:0", "12:0:0", "17:0:0");
-	serialData.runSendData(100);
+	// serialData.runSendData(100);
+
+	i2cMaster.setCapacity(capacity);
+	i2cMaster.setBlynkCmd(__auto_state__, __switch_state__);
+	i2cMaster.runSendData(100);
 	
 	if (WiFi.getMode() == WIFI_STA) {	
 		Blynk.run();

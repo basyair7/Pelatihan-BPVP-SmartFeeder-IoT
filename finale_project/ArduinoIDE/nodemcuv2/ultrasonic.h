@@ -25,9 +25,12 @@ public:
     delayMicroseconds(10);
     digitalWrite(this->__TriggerPin__, LOW);
 
-    return pulseIn(this->__EchoPin__, HIGH) * 0.034 / 2;
+    this->__value__ = pulseIn(this->__EchoPin__, HIGH) * 0.034 / 2; 
+
+    return this->__value__;
   }
   
 private:
+  float __value__;
   uint8_t __TriggerPin__, __EchoPin__;
 };
