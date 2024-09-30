@@ -25,7 +25,7 @@ BlynkTimer TIMER;
 ProgramWiFi programWiFi;
 WebServer webServer(80);
 // SerialData serialData(RX_TX, TX_RX);
-I2C_Master i2cMaster(0x08);
+I2C_Master i2cMaster(I2C_SLAVE_ADDR, JSONSIZE);
 
 BootButton bootBtn(BOOTBUTTON, INPUT);
 Ultrasonic ultrasonic(TRIG_PIN, ECHO_PIN);

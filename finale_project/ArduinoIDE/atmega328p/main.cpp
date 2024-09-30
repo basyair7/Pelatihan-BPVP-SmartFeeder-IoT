@@ -70,7 +70,7 @@ void MyProgram::__monitor__(void) {
 void MyProgram::__setup__(void) {
   Serial.begin(9600);
   // serialData.begin(9600);
-  I2CSlave_Init(I2C_MASTER_ADDR);
+  I2CSlave_Init(I2C_MASTER_ADDR, JSONSIZE);
 
   this->stepper.setSpeed(10);
   this->rtc.begin();

@@ -6,6 +6,7 @@
 
 bool __auto_state__, __switch_state__;
 int __capacity__;
+uint16_t __jsonSize__;
 
 void I2CSlave_getData(int* capacity, bool* auto_state, bool* switch_state) {
   *auto_state   = __auto_state__;
@@ -20,7 +21,7 @@ void receiveEvent() {
     rawJson += c;
   }
 
-  DynamicJsonDocument data(200);
+  DynamicJsonDocument data(__jsonSize__);
   DeserializationError err = deserializeJson(data, rawJson);
   if (!err) {
     __auto_state__   = data["a"];
@@ -33,7 +34,8 @@ void receiveEvent() {
   }
 }
 
-void I2CSlave_Init(uint8_t address) {
+void I2CSlave_Init(uint8_t address, uint16_t jsonSize) {
+  __jsonSize__ = jsonSize;
   Wire.begin(address);
   Wire.onReceive(receiveEvent);
 }

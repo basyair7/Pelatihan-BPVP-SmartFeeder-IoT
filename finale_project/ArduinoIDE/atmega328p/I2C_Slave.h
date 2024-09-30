@@ -8,5 +8,5 @@
 #include <ArduinoJson.h>
 #include <Wire.h>
 
-extern void I2CSlave_Init(uint8_t address);
+extern void I2CSlave_Init(uint8_t address, uint16_t jsonSize);
 extern void I2CSlave_getData(int* capacity, bool* auto_state, bool* switch_state);

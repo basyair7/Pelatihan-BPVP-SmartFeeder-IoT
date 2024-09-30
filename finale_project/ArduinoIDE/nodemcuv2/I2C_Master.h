@@ -10,7 +10,11 @@
 
 class I2C_Master {
 public:
-  I2C_Master(uint8_t slaveAddress) : _slaveAddress(slaveAddress) { /*TODO(Not yet implemented)*/ }
+  I2C_Master(uint8_t slaveAddress, uint16_t jsonSize) : 
+    __address__(slaveAddress), __jsonSize__(jsonSize) 
+  {
+    /*TODO(Not yet implemented)*/ 
+  }
 
   void begin(uint8_t __SDA__, uint8_t __SCL__) {
     Wire.begin(__SDA__, __SCL__);
@@ -34,12 +38,11 @@ public:
       data["a"] = this->__auto_state__;
       data["m"] = this->__switch_state__;
 
-      // Serialisasi JSON dan kirim data ke Arduino Uno (slave)
       String jsonBuffer;
       size_t n = serializeJson(data, jsonBuffer);
 
-      Wire.beginTransmission(_slaveAddress);  // Mulai transmisi
-      Wire.write(jsonBuffer.c_str(), n);  // Mengirim data JSON
+      Wire.beginTransmission(__address__);
+      Wire.write(jsonBuffer.c_str(), n);
       Wire.endTransmission();
     }
   }
@@ -50,5 +53,6 @@ private:
   unsigned long LastSendData = 0;
 
 private:
-  uint8_t _slaveAddress;
+  uint8_t __address__;
+  uint16_t __jsonSize__;
 };

@@ -20,4 +20,7 @@
 #define EMPTY             14    // cm
 #define FULL              5     // cm
 
+#define I2C_SLAVE_ADDR    0x08
+#define JSONSIZE          200
+
 #define EEPROM_BLYNK_ADDR 0x4   // don't replace it...
