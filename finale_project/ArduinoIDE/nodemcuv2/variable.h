@@ -17,7 +17,7 @@
 
 #define BOOTBUTTON        D3
 
-#define EMPTY             30    // cm
+#define EMPTY             18    // cm
 #define FULL              5     // cm
 
 #define I2C_SLAVE_ADDR    0x08

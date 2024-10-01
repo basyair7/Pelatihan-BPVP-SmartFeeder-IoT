@@ -39,13 +39,13 @@ void __indikator__(void) {
   if ((unsigned long) (millis() - LastTimeLED) >= 100) {
     LastTimeLED = millis();
 
-    if (distance < FULL || distance > EMPTY) {
-      digitalWrite(LED_YELLOW, LOW);
-      digitalWrite(LED_RED, HIGH);
-    }
-    else {
+    if (capacity > 0) {
       digitalWrite(LED_YELLOW, HIGH);
       digitalWrite(LED_RED, LOW);
+    }
+    else {
+      digitalWrite(LED_YELLOW, LOW);
+      digitalWrite(LED_RED, HIGH);
     }
   }
 }
