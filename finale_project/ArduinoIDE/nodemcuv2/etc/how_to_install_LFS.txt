@@ -1,1 +1,0 @@
-https://randomnerdtutorials.com/arduino-ide-2-install-esp8266-littlefs/
